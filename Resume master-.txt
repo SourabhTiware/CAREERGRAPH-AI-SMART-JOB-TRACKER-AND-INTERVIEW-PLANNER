@@ -1,0 +1,20 @@
+
+Resume master- 
+Backend - packages. 
+npm init -y
+npm i express mongoose dotenv cors
+
+
+Backend structure - 
+
+controllers - 
+    registerUserController - register user
+    loginUserController - login user 
+    logoutUserController - logout user 
+    getMeController - Get user details. check token is valid or invalid and also check token is blacklisted or not using the "authUser" middleware
+
+
+middleware - 
+    authUser - middleware authenticated the user by it's token and token is invalid and also check token is blacklisted and send appropriate sms.
+     
+
