@@ -16,5 +16,24 @@ controllers -
 
 middleware - 
     authUser - middleware authenticated the user by it's token and token is invalid and also check token is blacklisted and send appropriate sms.
+
+
+
+
+Frontend Folder structure
+    UI 
+    => Component
+    => Pages
+
+    Hook => for managning state and API layers
+    => Hook
+
+    State => data store
+    => auth.context.jsx
+    => ai.context.jsx
+
+    API => for communication with backend. 
+    => severcies
+        => auth.api.js
      
 
