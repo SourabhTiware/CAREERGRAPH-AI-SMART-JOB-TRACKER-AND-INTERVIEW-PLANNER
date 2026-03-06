@@ -26,6 +26,7 @@ export const login = async({email, password}) =>{
             email, password
         })
 
+        console.log(response.data);
         return response.data;
 
     } catch (err) {
@@ -52,6 +53,10 @@ export const getMe = async () =>{
 
     } catch (err) {
         console.log(err)
+        if (err.response?.status !== 401) {
+            console.error("Fetch User Error:", err);
+        }
+        return null; // Explicitly return null so 'data' isn't undefined
     }
 
 }
