@@ -52,14 +52,12 @@ import blacklistModel from "../models/blacklist.model.js";
 
             const token = jwt.sign({ id: user._id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"});
 
-            res.cookie("token",token);
-
-            // res.cookie("token", token, {
-            //     httpOnly: true,
-            //     secure: process.env.NODE_ENV === "production",
-            //     sameSite: "strict",
-            //     maxAge: 24 * 60 * 60 * 1000, // 1 day
-            // });
+            res.cookie("token", token, {
+            httpOnly: true, // JavaScript द्वारे कुकी वाचता येणार नाही (Security)
+            secure: process.env.NODE_ENV === "production", // HTTPS असेल तरच पाठवा (Production मध्ये true)
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-site साठी 'none' आवश्यक आहे
+            maxAge: 24 * 60 * 60 * 1000, // 1 दिवस
+        });
 
             res.status(201).json({
                 success: true,
@@ -121,13 +119,12 @@ import blacklistModel from "../models/blacklist.model.js";
 
             const token = jwt.sign({ id: user._id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"});
 
-            res.cookie("token",token,{
-                httpOnly: true,
-                secure: false,
-                maxAge: 24 * 60 * 60 * 1000,
-                path: "/",
-                seameSite:"lax"
-            });
+            res.cookie("token", token, {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === "production", 
+                        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
+                        maxAge: 24 * 60 * 60 * 1000, 
+                    });
 
             res.status(200).json({
                 success: true,

@@ -1,4 +1,3 @@
-process.removeAllListeners('warning');
 import express from "express"
 import authRouter from "./routes/Auth.routes.js";
 import cookieParser from "cookie-parser";
@@ -8,8 +7,10 @@ import interviewRouter from "./routes/interview.routes.js";
 const app = express();
 
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials: true
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // middleware to listing data from the body and params. 

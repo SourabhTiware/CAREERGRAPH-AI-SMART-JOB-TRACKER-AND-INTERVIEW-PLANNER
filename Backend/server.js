@@ -5,6 +5,14 @@ import "dotenv/config";
 import app from "./src/app.js";
 import connectToDB from "./src/config/database.js";
 
+const originalWarn = console.warn;
+console.warn = (...args) => {
+    if (typeof args[0] === 'string' && (args[0].includes('TT:') || args[0].includes('invalid function id'))) {
+        return;
+    }
+    originalWarn(...args);
+};
+
 let port = process.env.PORT;
 
 connectToDB()

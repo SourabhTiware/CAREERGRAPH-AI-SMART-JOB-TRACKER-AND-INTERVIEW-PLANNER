@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const API = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true
     // axios restrict to server set to cookies to be sent in cross-origin requests, this is required for session management with cookies. 
 })
