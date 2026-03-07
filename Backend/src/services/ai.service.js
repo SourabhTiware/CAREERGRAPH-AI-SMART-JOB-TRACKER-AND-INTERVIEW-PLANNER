@@ -137,7 +137,8 @@
 
 import Groq from "groq-sdk";
 import { z } from "zod";
-import puppeteer from "puppeteer"
+// import puppeteer from "puppeteer"
+import html_to_pdf from 'html-pdf-node';
 
 // Zod schema 
     const interviewReportSchema = z.object({
@@ -367,36 +368,61 @@ const resumePdfSchema = z.object({
 // }
 
 
-export async function generatePdfFromHtml(htmlContent) {
-    let browser;
-    try {
-        browser = await puppeteer.launch({
-            headless: "new",
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--single-process'
-            ],
-            // हे Puppeteer ला Chrome शोधायला मदत करेल
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || 
-                            (process.platform === 'linux' ? '/usr/bin/google-chrome' : null)
-        });
+// export async function generatePdfFromHtml(htmlContent) {
+//     let browser;
+//     try {
+//         browser = await puppeteer.launch({
+//             headless: "new",
+//             args: [
+//                 '--no-sandbox',
+//                 '--disable-setuid-sandbox',
+//                 '--disable-dev-shm-usage',
+//                 '--single-process'
+//             ],
+//             // हे Puppeteer ला Chrome शोधायला मदत करेल
+//             executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || 
+//                             (process.platform === 'linux' ? '/usr/bin/google-chrome' : null)
+//         });
 
-        const page = await browser.newPage();
-        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+//         const page = await browser.newPage();
+//         await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
         
-        const pdfBuffer = await page.pdf({
-            format: 'A4',
-            printBackground: true,
-        });
+//         const pdfBuffer = await page.pdf({
+//             format: 'A4',
+//             printBackground: true,
+//         });
 
+//         return pdfBuffer;
+//     } catch (error) {
+//         console.error("PDF Generation Detailed Error:", error);
+//         throw error;
+//     } finally {
+//         if (browser) await browser.close();
+//     }
+// }
+
+export async function generatePdfFromHtml(htmlContent) {
+    try {
+
+        let options = { 
+            format: 'A4', 
+            printBackground: true,
+            margin: {
+                top: "15mm",
+                bottom: "15mm",
+                left: "15mm",
+                right: "15mm"
+            }
+        };
+
+        let file = { content: htmlContent };
+
+        const pdfBuffer = await html_to_pdf.generatePdf(file, options);
+        
         return pdfBuffer;
     } catch (error) {
-        console.error("PDF Generation Detailed Error:", error);
+        console.error("PDF Generation Error (html-pdf-node):", error);
         throw error;
-    } finally {
-        if (browser) await browser.close();
     }
 }
 
