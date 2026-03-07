@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/userInterview'
@@ -34,9 +33,6 @@ const Home = () => {
         }
     }
 
-
-// १. हा useEffect 'loading' च्या खाली न ठेवता, त्याच्या वरच राहू द्या 
-// (पण loading false झाल्यावरच रन होईल याची खात्री करा)
 
 useEffect(() => {
     if (loading) return;

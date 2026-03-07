@@ -1,20 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-// import axios from 'axios'; // आता याची गरज नाही, आपण handleLogout हूक मधून वापरू
-import { useAuth } from "../hooks/useAuth.js"; // पाथ तपासून घे
+import { useAuth } from "../hooks/useAuth.js"; 
 import "../auth.form.scss"
 
 const Navbar = () => {
-    // १. useAuth मधून user आणि handleLogout घ्या
+
     const { user, handleLogout: logoutFromHook } = useAuth();
     const navigate = useNavigate();
 
-    // २. जर युजर नसेल तर नॅव्हबार दाखवू नका
+   
     if (!user) return null;
 
     const onLogoutClick = async () => {
         try {
-            // ३. हूक मधील लॉगआउट फंक्शन कॉल करा
             await logoutFromHook();
             alert("Logged out successfully!");
             navigate('/login');

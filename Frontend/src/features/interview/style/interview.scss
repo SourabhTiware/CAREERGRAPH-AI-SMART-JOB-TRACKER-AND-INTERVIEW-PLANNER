@@ -123,13 +123,6 @@ $severity-low: #3fb950;
     padding-bottom: 5rem;
     align-items: flex-start;
 
-
-
-
-
-
-
-
     section {
         min-height: 100%;
     }
@@ -458,7 +451,7 @@ $severity-low: #3fb950;
     &__list {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.6rem; // टॅग्समध्ये अंतर ठेवा
+        gap: 0.6rem; 
     }
 
     .status-legend {

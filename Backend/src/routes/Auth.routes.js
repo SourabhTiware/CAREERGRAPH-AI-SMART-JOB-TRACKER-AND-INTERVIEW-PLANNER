@@ -1,6 +1,3 @@
-// import express from "express";
-// const authRouter = express.Router();
-
 import { Router } from "express"; // alternative of above code - use here dis_structuring Router from express object. 
 import authController from "../controllers/auth.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";

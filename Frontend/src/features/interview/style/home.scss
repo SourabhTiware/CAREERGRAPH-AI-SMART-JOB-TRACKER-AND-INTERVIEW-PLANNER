@@ -88,15 +88,15 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     right: 2rem;
     font-size: 0.75rem;
     color: $text-muted;
-    transition: all 0.2s ease; // रंग बदलताना स्मूथ दिसेल
+    transition: all 0.2s ease; 
     pointer-events: none;
 
-    // जेव्हा ५००० पूर्ण होतील तेव्हा हा भाग रन होईल
+   
     &.limit-reached {
-        color: $accent;         // गुलाबी रंग ($ff2d78)
-        font-weight: 700;       // बोल्ड करा
-        transform: scale(1.1);  // थोडा मोठा दिसेल (Attention grabber)
-        text-shadow: 0 0 8px rgba($accent, 0.4); // हलकासा ग्लो
+        color: $accent;         
+        font-weight: 700;       
+        transform: scale(1.1);  
+        text-shadow: 0 0 8px rgba($accent, 0.4); 
     }
 }
 }
@@ -260,14 +260,14 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     &__filename {
         font-size: 0.9rem;
         font-weight: 600;
-        color: $accent; // हाच तो 'Best Result' चा रंग ($accent: #ff2d78)
+        color: $accent; 
         margin-top: 0.5rem;
-        word-break: break-all; // लांब नाव असेल तर ते ब्रेक होईल
+        word-break: break-all; 
         text-align: center;
         padding: 0 1rem;
     }
     
-    // जेव्हा फाईल सिलेक्ट असेल तेव्हा बॉर्डरचा रंग बदलण्यासाठी (Optional)
+   
     &:has(.dropzone__filename) {
         border-color: $accent;
         background-color: rgba($accent, 0.05);
@@ -357,40 +357,6 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     }
 }
 
-// .recent-reports{
-//     display: flex;
-//     flex-direction: column;
-//     gap: 0.75rem;
-//     width: 100%;
-//     max-width: 900px;
-
-//     .reports-list{
-//         display: flex;
-//         gap: 0.75rem;
-//         flex-wrap: wrap;
-
-//         .report-item{
-//             background-color: $bg-card;
-//             border: 1px solid $border-color;
-//             border-radius: 0.5rem;
-//             padding: 1rem;
-//             flex: 1;
-//             display: flex;
-//             flex-direction: column;
-//             gap: 0.5rem;
-//             cursor: pointer;
-//             flex-shrink: 0;
-
-//             .match-score {
-//                 font-size: 0.8rem;
-//                 font-weight: 600;
-//                 color: $accent;
-//                 align-items: flex-start;
-//             }
-//         }
-//     }
-// }
-
 .recent-reports {
     display: flex;
     flex-direction: column;
@@ -406,8 +372,8 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     }
 
     .reports-list {
-        display: grid; // Flex ऐवजी Grid वापरल्याने कार्ड्स नीट ओळीत दिसतात
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // रिस्पॉन्सिव्ह ग्रिड
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
         gap: 1rem;
         padding: 0;
         list-style: none;
@@ -419,11 +385,11 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
             border-radius: 0.75rem;
             padding: 1.25rem;
             
-            // फिक्स्ड हायट आणि विड्थ सेटिंग्ज
+            
             height: 160px; 
             display: flex;
             flex-direction: column;
-            justify-content: space-between; // कन्टेन्ट मध्ये अंतर ठेवण्यासाठी
+            justify-content: space-between; 
             
             transition: all 0.2s ease;
             cursor: pointer;
@@ -431,7 +397,7 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
             &:hover {
                 border-color: $accent;
                 background-color: rgba($accent, 0.02);
-                transform: translateY(-4px); // छोटासा लिफ्ट इफेक्ट
+                transform: translateY(-4px); 
             }
 
             h3 {
@@ -439,7 +405,6 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
                 font-weight: 600;
                 color: $text-primary;
                 margin: 0;
-                // जर टायटल मोठे असेल तर ते २ ओळींनंतर लपवण्यासाठी
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 line-clamp: 2;
@@ -460,7 +425,6 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
                 border-radius: 4px;
                 width: fit-content;
                 
-                // रंगांचे क्लासेस (तुमच्या JSX मध्ये आधीच आहेत)
                 &.score--high { color: #10b981; background: rgba(16, 185, 129, 0.1); }
                 &.score--mid { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
                 &.score--low { color: $accent; background: rgba($accent, 0.1); }
