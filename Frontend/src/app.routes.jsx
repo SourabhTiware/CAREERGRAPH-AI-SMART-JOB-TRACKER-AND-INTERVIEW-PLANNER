@@ -32,11 +32,11 @@
 
 
 import { createBrowserRouter, Outlet } from "react-router"; // किंवा react-router-dom
-import Login from "./features/auth/pages/login.jsx"
-import Register from "./features/auth/pages/register.jsx";
+import Login from "./features/auth/pages/Login.jsx"
+import Register from "./features/auth/pages/Register.jsx";
 import Protected from "./features/auth/components/Protected.jsx";
 import Home from "./features/interview/pages/Home.jsx";
-import Interview from "./features/interview/pages/interview.jsx";
+import Interview from "./features/interview/pages/Interview.jsx";
 import Navbar from "./features/auth/pages/Navbar.jsx";
 
 // १. लेआउट घटक तयार करा जो सर्व प्रोटेक्टेड पेजेसवर नॅव्हबार दाखवेल
