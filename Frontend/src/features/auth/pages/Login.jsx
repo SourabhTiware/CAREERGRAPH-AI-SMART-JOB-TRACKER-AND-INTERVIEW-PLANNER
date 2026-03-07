@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../auth.form.scss"
 import {useNavigate, Link} from "react-router"
 import { useAuth } from "../hooks/useAuth.js" ;
+import { MainHeading } from "./MainHeading.jsx";
 
 
 const Login = () => {
@@ -28,6 +29,8 @@ const Login = () => {
 
   return (
     <main>
+        <MainHeading />
+
         <div className="form-container">
             <h1 >Login</h1>
 

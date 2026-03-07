@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {useNavigate, Link} from "react-router"
 import { useAuth} from "../hooks/useAuth.js"
+import { MainHeading } from "./MainHeading.jsx";
 
 const Register = () => {
 
@@ -25,7 +26,10 @@ const Register = () => {
 
   return (
     <div>
+      
         <main>
+          <MainHeading />
+
         <div className="form-container">
             <h1 >Register</h1>
 

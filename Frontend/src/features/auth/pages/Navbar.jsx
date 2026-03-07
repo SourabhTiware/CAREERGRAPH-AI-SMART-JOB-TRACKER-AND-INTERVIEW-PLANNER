@@ -1,7 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link} from 'react-router';
 import { useAuth } from "../hooks/useAuth.js"; 
 import "../auth.form.scss"
+
 
 const Navbar = () => {
 
@@ -24,7 +25,7 @@ const Navbar = () => {
     return (
         <nav className="global-nav">
             <div className="nav-container">
-                <div className="logo">AI Interviewer</div>
+                <div className="logo"><p><Link>CAREERGRAPH-AI</Link></p></div>
                 <button className="logout-btn" onClick={onLogoutClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '8px'}}>
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
