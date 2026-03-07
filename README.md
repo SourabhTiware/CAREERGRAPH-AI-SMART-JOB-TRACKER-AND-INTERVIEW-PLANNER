@@ -11,13 +11,13 @@ Resume Master is a robust Full-Stack MERN application designed to empower job se
 - **Automated Resume Builder:** Dynamically generates professional PDF resumes based on AI insights and user data.
 - **SaaS-Style Job Tracker:** (In-Development) A dedicated dashboard to manage, track, and organize all your job applications in one place.
 - **Secure Authentication:** JWT-based user sessions with protected routes for data privacy.
-- **Responsive UI:** A seamless experience across desktop and mobile devices built with Tailwind CSS.
+- **Responsive UI:** A seamless experience across desktop and mobile devices built SCSS.
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - **Framework:** React.js (Vite)
-- **Styling:** Tailwind CSS
+- **Styling:** scss
 - **State Management:** React Hooks & Context API
 - **Networking:** Axios with Interceptors
 
