@@ -14,11 +14,24 @@ const Home = () => {
     const navigate = useNavigate()
 
     const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[ 0 ]
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        if(data && data._id){
-            navigate(`/interview/${data._id}`)
+        try{
+
+            const resumeFile = resumeInputRef.current.files[ 0 ]
+            const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+                if(data && data._id){
+                    navigate(`/interview/${data._id}`)
+            }
+
         }
+        catch (err) {
+            if (err.message === "AI_LIMIT_REACHED") {
+                alert("The AI is currently at its daily limit. Please try again in 15-20 minutes.");
+            } 
+            else {
+                alert("An unexpected error occurred. Please try again later.");
+            }
+    }
+
     }
 
     const handleCardClick = (id) => {

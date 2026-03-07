@@ -112,8 +112,13 @@ export async function generateInterviewReport({ resume, selfDescription, jobDesc
         return parsedData.data;
 
     } catch (error) {
-        console.error("Error in generateInterviewReport:", error);
-        throw new Error("Error in generating interview report: " + error.message);
+
+        if(error.status === 429){
+            console.error("Groq Rate Limit Hit. Retry after:", error.headers['retry-after']);
+            throw new Error("AI_LIMIT_REACHED");
+
+        }
+        throw  error
     }
 }
 

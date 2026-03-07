@@ -2,6 +2,7 @@
 import * as pdfParse from "pdf-parse";
 import {generateInterviewReport, generateResumePdf} from "../services/ai.service.js";
 import interviewReportModel from "../models/interviewReport.model.js";
+import { success } from "zod";
 
 
 /**
@@ -75,13 +76,28 @@ async function getInterviewReportByIdController(req, res) {
  * @description Controller to get all interview reports of logged in user.
  */
 async function getAllInterviewReportsController(req, res) {
-    const interviewReports = await interviewReportModel.find({ user: req.user._id }).sort({ createdAt: -1 }).select("-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan")
 
-    res.status(200).json({
-        message: "Interview reports fetched successfully.",
-        interviewReports
-    })
-}
+    try{
+        const interviewReports = await interviewReportModel.find({ user: req.user._id }).sort({ createdAt: -1 }).select("-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan")
+
+        res.status(200).json({
+            message: "Interview reports fetched successfully.",
+            interviewReports
+        })
+    }catch(err){
+        if(err.message === "AI_LIMIT_REACHED"){
+            return res.status(429).json({
+                success:false,
+                message:"The AI is currently busy due to high demand. Please try again in a few minutes.",
+            });
+        }
+        res.status(500).json({
+            success: false,
+            message:"Internal server error"
+        })
+    }
+
+};
 
 
 /**
