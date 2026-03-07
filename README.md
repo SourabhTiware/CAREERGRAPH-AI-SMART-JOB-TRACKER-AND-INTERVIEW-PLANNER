@@ -62,13 +62,13 @@ Resume Master is a robust Full-Stack MERN application designed to empower job se
 - **Create a .env file and add:**
 
 ```
-    PORT=3000
+    PORT=
 
-    MONGODB_URI=your_mongodb_connection_string
+    MONGODB_URI = your_mongodb_connection_string
 
-    JWT_SECRET=your_secret_key
+    JWT_SECRET = your_secret_key
 
-    GEMINI_API_KEY=your_api_key
+    GEMINI_API_KEY = your_api_key
 
 ```
 - **Start server: npm run dev**
