@@ -15,6 +15,7 @@ export const useAuth = () =>{
         try {
             const data = await login({ email, password});
             setUser(data.user);
+            localStorage.setItem("user", JSON.stringify(data.user));
         } catch (err) {
             
         } finally{
@@ -31,7 +32,10 @@ export const useAuth = () =>{
         try {
             const data = await register({username, email, password});
 
-            setUser(data.user);
+            if (data.success && data.user) {
+                setUser(data.user);
+                localStorage.setItem('user', JSON.stringify(data.user));
+            }
         }
          catch (error) {
             
@@ -49,6 +53,7 @@ export const useAuth = () =>{
         try{
             const data = await logout();
             setUser(null);
+            localStorage.removeItem("user");
         }catch(err){
 
         }
@@ -59,19 +64,33 @@ export const useAuth = () =>{
     
     useEffect(()=>{
         const getAndSetUser = async ()=>{
+
+            const saveUser = localStorage.getItem("user");
+
+            if(!saveUser){
+                setLoading(false)
+                return;
+            }
             try {
                     const data = await getMe();
-                    if(data && data.user) setUser(data.user);
-                    else setUser(null);
+                    if(data && data.user) {
+                        setUser(data.user);
+                        localStorage.setItem("user", JSON.stringify(data.user));
+                    }
+                    else {
+                        setUser(null);
+                        localStorage.removeItem("user");
+                    }
             } catch (error) {
-                
+                setUser(null);
+                localStorage.removeItem("user")
             } finally{
                 setLoading(false);
             }
         }
 
         getAndSetUser();
-    }, [])
+    }, [setUser, setLoading])
 
 
     return {user, loading, handleRegister, handleLogin, handleLogout}

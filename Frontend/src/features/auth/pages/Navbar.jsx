@@ -1,0 +1,43 @@
+import React from 'react';
+import { useNavigate } from 'react-router';
+// import axios from 'axios'; // आता याची गरज नाही, आपण handleLogout हूक मधून वापरू
+import { useAuth } from "../hooks/useAuth.js"; // पाथ तपासून घे
+import "../auth.form.scss"
+
+const Navbar = () => {
+    // १. useAuth मधून user आणि handleLogout घ्या
+    const { user, handleLogout: logoutFromHook } = useAuth();
+    const navigate = useNavigate();
+
+    // २. जर युजर नसेल तर नॅव्हबार दाखवू नका
+    if (!user) return null;
+
+    const onLogoutClick = async () => {
+        try {
+            // ३. हूक मधील लॉगआउट फंक्शन कॉल करा
+            await logoutFromHook();
+            alert("Logged out successfully!");
+            navigate('/login');
+        } catch (error) {
+            console.error("Logout Error:", error);
+        }
+    };
+
+    return (
+        <nav className="global-nav">
+            <div className="nav-container">
+                <div className="logo">AI Interviewer</div>
+                <button className="logout-btn" onClick={onLogoutClick}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '8px'}}>
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;

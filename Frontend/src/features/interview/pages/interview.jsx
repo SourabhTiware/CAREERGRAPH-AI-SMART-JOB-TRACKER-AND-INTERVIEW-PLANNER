@@ -175,11 +175,54 @@ const Interview = () => {
                     <div className='sidebar-divider' />
 
                     {/* Skill Gaps */}
-                    <div className='skill-gaps'>
-                        <p className='skill-gaps__label'>Skill Gaps</p>
+                    {/* <div className='skill-gaps'>
+                        <div className="skill-gaps__header-row">
+                            <p className='skill-gaps__label'>Skill Gaps</p>
+
+                            <div className="status-legend">
+                                <div className="status-item"><span className="dot dot--high"></span> High</div>
+                                <div className="status-item"><span className="dot dot--medium"></span> Medium</div>
+                                <div className="status-item"><span className="dot dot--low"></span> Low</div>
+                            </div>
+                        </div>
+                        
+
                         <div className='skill-gaps__list'>
                             {report.skillGaps.map((gap, i) => (
-                                <span key={i} className={`skill-tag skill-tag--${gap.severity}`}>
+                                <span key={i} className={`skill-tag skill-tag--${gap.severity.toLowerCase()}`}>
+                                    {gap.skill}
+                                </span>
+                            ))}
+                        </div>
+                    </div> */}
+
+                    <div className='skill-gaps'>
+                        <div className="skill-gaps__header-row">
+                            <p className='skill-gaps__label'>Skill Gaps</p>
+                            
+                           <div className="status-legend">
+                                <div className="status-item">
+                                    <span className="dot dot--high"></span> HIGH
+                                </div>
+
+                                <div className="status-item">
+                                    <span className="dot dot--medium"></span> MEDIUM
+                                </div>
+
+                                <div className="status-item">
+                                    <span className="dot dot--low"></span> LOW
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div className='skill-gaps__list'>
+
+                            {report?.skillGaps?.map((gap, i) => (
+                                <span 
+                                    key={i} 
+                                    className={`skill-tag skill-tag--${gap.severity?.toLowerCase() || 'low'}`}
+                                >
                                     {gap.skill}
                                 </span>
                             ))}

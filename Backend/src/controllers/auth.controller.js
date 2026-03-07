@@ -121,7 +121,13 @@ import blacklistModel from "../models/blacklist.model.js";
 
             const token = jwt.sign({ id: user._id, username: user.username}, process.env.JWT_SECRET, {expiresIn: "1d"});
 
-            res.cookie("token",token);
+            res.cookie("token",token,{
+                httpOnly: true,
+                secure: false,
+                maxAge: 24 * 60 * 60 * 1000,
+                path: "/",
+                seameSite:"lax"
+            });
 
             res.status(200).json({
                 success: true,

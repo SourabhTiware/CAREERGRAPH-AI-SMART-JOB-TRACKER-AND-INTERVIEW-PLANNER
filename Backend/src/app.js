@@ -1,3 +1,4 @@
+process.removeAllListeners('warning');
 import express from "express"
 import authRouter from "./routes/Auth.routes.js";
 import cookieParser from "cookie-parser";
