@@ -331,8 +331,20 @@ const resumePdfSchema = z.object({
 });
 
 export async function generatePdfFromHtml(htmlContent) {
+    // const browser = await puppeteer.launch({
+    //     headless: "new" 
+    // });
+
     const browser = await puppeteer.launch({
-        headless: "new" 
+        headless: "new", 
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage', 
+            '--single-process'         
+        ],
+       
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || null, 
     });
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
