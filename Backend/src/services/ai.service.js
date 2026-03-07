@@ -330,39 +330,74 @@ const resumePdfSchema = z.object({
     html: z.string().min(1, "HTML content is required")
 });
 
-export async function generatePdfFromHtml(htmlContent) {
-    // const browser = await puppeteer.launch({
-    //     headless: "new" 
-    // });
+// export async function generatePdfFromHtml(htmlContent) {
+//     // const browser = await puppeteer.launch({
+//     //     headless: "new" 
+//     // });
 
-    const browser = await puppeteer.launch({
-        headless: "new", 
-        args: [
-            '--no-sandbox', 
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage', 
-            '--single-process'         
-        ],
+
+//     const browser = await puppeteer.launch({
+//         headless: "new", 
+//         args: [
+//             '--no-sandbox', 
+//             '--disable-setuid-sandbox',
+//             '--disable-dev-shm-usage', 
+//             '--single-process'         
+//         ],
        
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || null, 
-    });
-    const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+//         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || null, 
+//     });
+//     const page = await browser.newPage();
+//     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    const pdfBuffer = await page.pdf({
-        format: "A4",
-        printBackground: true,
-        margin: {
-            top: "15mm",
-            bottom: "15mm",
-            left: "15mm",
-            right: "15mm"
-        },
-        printBackground: true 
-    });
+//     const pdfBuffer = await page.pdf({
+//         format: "A4",
+//         printBackground: true,
+//         margin: {
+//             top: "15mm",
+//             bottom: "15mm",
+//             left: "15mm",
+//             right: "15mm"
+//         },
+//         printBackground: true 
+//     });
 
-    await browser.close();
-    return pdfBuffer;
+//     await browser.close();
+//     return pdfBuffer;
+// }
+
+
+export async function generatePdfFromHtml(htmlContent) {
+    let browser;
+    try {
+        browser = await puppeteer.launch({
+            headless: "new",
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--single-process'
+            ],
+            // हे Puppeteer ला Chrome शोधायला मदत करेल
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || 
+                            (process.platform === 'linux' ? '/usr/bin/google-chrome' : null)
+        });
+
+        const page = await browser.newPage();
+        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+        
+        const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+        });
+
+        return pdfBuffer;
+    } catch (error) {
+        console.error("PDF Generation Detailed Error:", error);
+        throw error;
+    } finally {
+        if (browser) await browser.close();
+    }
 }
 
 export async function generateResumePdf({ resume, selfDescription, jobDescription }) {
