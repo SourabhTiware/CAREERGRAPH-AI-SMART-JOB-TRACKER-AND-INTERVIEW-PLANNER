@@ -36,4 +36,13 @@ const interviewRouter = express.Router();
  */
     interviewRouter.post("/resume/pdf/:interviewReportId", authMiddleware.authUser, interviewController.generateResumePdfController)
 
+
+/**
+ * @route GET /api/interview/
+ * @description delete the interview report
+ * @access private
+ */
+
+   interviewRouter.delete("/:id", authMiddleware.authUser, interviewController.deleteInterviewReportController);
+
 export default interviewRouter;

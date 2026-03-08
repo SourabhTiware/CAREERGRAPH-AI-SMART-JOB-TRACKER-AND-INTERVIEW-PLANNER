@@ -5,13 +5,20 @@ import { useNavigate } from 'react-router'
 
 const Home = () => {
 
-    const { loading, generateReport,reports } = useInterview()
+    const { loading, generateReport,reports, deleteReport } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
     const resumeInputRef = useRef()
     const [ fileName, setFileName ] = useState("")
 
     const navigate = useNavigate()
+
+const handleDelete = async (e, id) => {
+    e.stopPropagation(); 
+    if (window.confirm("Are you sure you want to delete this plan?")) {
+        await deleteReport(id);
+    }
+};
 
     const handleGenerateReport = async () => {
         try{
@@ -189,15 +196,37 @@ useEffect(() => {
             {reports.length > 0 && (
                 <section className='recent-reports'>
                     <h2>My Recent Interview Plans</h2>
+                    <div>
                     <ul className='reports-list'>
                         {reports.map(report => (
                             <li key={report._id} id={`report-${report._id}`} className='report-item' onClick={() => handleCardClick(report._id)}>
                                 <h3>{report.title || 'Untitled Position'}</h3>
                                 <p className='report-meta'>Generated on {new Date(report.createdAt).toLocaleDateString()}</p>
                                 <p className={`match-score ${report.matchScore >= 80 ? 'score--high' : report.matchScore >= 60 ? 'score--mid' : 'score--low'}`}>Match Score: {report.matchScore}%</p>
+                                <button
+                                onClick={(e) => handleDelete(e, report._id)}
+                                className="delete-btn"
+                                style={{ 
+                                    maxWidth: "50%", 
+                                    marginTop: "0.5rem", 
+                                    border: "none", 
+                                    marginLeft: "6rem", 
+                                    outline: "none", 
+                                    padding: "0.4rem 1rem", 
+                                    borderRadius: "1rem", 
+                                    cursor: "pointer", 
+                                    background: "#e1034d", 
+                                    color: "white" 
+                                }}
+                                 >Delete</button>
                             </li>
+                            
                         ))}
-                    </ul>
+                         
+                    </ul>   
+                    </div>
+
+                   
                 </section>
             )}
 
