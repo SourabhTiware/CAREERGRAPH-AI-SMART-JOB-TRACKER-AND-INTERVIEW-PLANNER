@@ -34,14 +34,18 @@ const authUser = async (req, res, next) => {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            req.user = decoded;
+            // req.user = decoded;
+            req.user = {
+                ...decoded,
+                _id: decoded.id // हा बदल करा
+            };
             next();
         }
         catch (error) {
             console.error("Error in authMiddleware:", error);
-            return res.status(500).json({
+            return res.status(401).json({
                 success: false,
-                message: "Internal Server Error",
+                message: "Unauthorized, invalid token",
             });
         }
     }

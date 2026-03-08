@@ -183,7 +183,7 @@ import blacklistModel from "../models/blacklist.model.js";
 
     const getMeController = async(req,res) =>{
         try {
-            const user = await userModel.findById(req.user.id);
+            const user = await userModel.findById(req.user._id);
             
             res.status(200).json({
                 message: "User Details Fetched Successfully",

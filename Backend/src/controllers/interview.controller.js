@@ -55,21 +55,37 @@ import { success } from "zod";
  */
 async function getInterviewReportByIdController(req, res) {
 
-    const { interviewId } = req.params
+    try {
 
-    const interviewReport = await interviewReportModel.findOne({ _id: interviewId, user: req.user._id })
+           const { interviewId } = req.params
+            const interviewReport = await interviewReportModel.findOne({ _id: interviewId, user: req.user._id })
 
-    if (!interviewReport) {
-        return res.status(404).json({
-            message: "Interview report not found."
-        })
+            if (!interviewReport) {
+                return res.status(404).json({
+                    message: "Interview report not found."
+                })
+            }
+
+            res.status(200).json({
+                message: "Interview report fetched successfully.",
+                interviewReport
+            })
+        
+        }  catch (err) {
+    
+            if (err.message === "AI_LIMIT_REACHED") {
+                return res.status(429).json({
+                    message: "AI_LIMIT_REACHED",
+                    error: "The AI is currently at its daily limit."
+                });
+            }
+
+            return res.status(500).json({
+                message: "Error in generating interview report",
+                error: err.message
+            });
+        }
     }
-
-    res.status(200).json({
-        message: "Interview report fetched successfully.",
-        interviewReport
-    })
-}
 
 
 /** 
@@ -108,12 +124,12 @@ async function generateResumePdfController(req, res) {
 
     const interviewReport = await interviewReportModel.findById({
         _id: interviewReportId,
-        user: req.user_id
+        user: req.user._id
     })
 
     if (!interviewReport) {
         return res.status(404).json({
-            message: "Interview report not found."
+            message: "Interview report not found or unauthorized."
         })
     }
 
