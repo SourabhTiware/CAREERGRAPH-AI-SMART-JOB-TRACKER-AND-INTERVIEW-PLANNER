@@ -24,11 +24,11 @@ const Home = () => {
 
         }
         catch (err) {
-            if (err.message === "AI_LIMIT_REACHED") {
+            if (err === "AI_LIMIT_REACHED") {
                 alert("The AI is currently at its daily limit. Please try again in 15-20 minutes.");
             } 
             else {
-                alert("An unexpected error occurred. Please try again later.");
+                alert("An unexpected error occurred. Please try again later. AI_LIMIT_IS_REACHED");
             }
     }
 
