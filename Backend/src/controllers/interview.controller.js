@@ -120,29 +120,39 @@ async function getAllInterviewReportsController(req, res) {
  * @description Controller to generate resume PDF based on user self description, resume and job description.
  */
 async function generateResumePdfController(req, res) {
-    const { interviewReportId } = req.params
+    try {
+            const { interviewReportId } = req.params
 
-    const interviewReport = await interviewReportModel.findById({
-        _id: interviewReportId,
-        user: req.user._id
-    })
+            const interviewReport = await interviewReportModel.findById({
+                _id: interviewReportId,
+                user: req.user._id
+            })
 
-    if (!interviewReport) {
-        return res.status(404).json({
-            message: "Interview report not found or unauthorized."
-        })
-    }
+            if (!interviewReport) {
+                return res.status(404).json({
+                    message: "Interview report not found or unauthorized."
+                })
+            }
 
-    const { resume, jobDescription, selfDescription } = interviewReport
+            const { resume, jobDescription, selfDescription } = interviewReport
 
-    const pdfBuffer = await generateResumePdf({ resume, jobDescription, selfDescription })
+            const pdfBuffer = await generateResumePdf({ resume, jobDescription, selfDescription })
 
-    res.set({
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename=resume_${interviewReportId}.pdf`
-    })
+            res.set({
+                "Content-Type": "application/pdf",
+                "Content-Disposition": `attachment; filename=resume_${interviewReportId}.pdf`
+            })
 
-    res.send(pdfBuffer)
+            res.send(pdfBuffer)
+        } catch (err) {
+            if (err.message === "AI_LIMIT_REACHED") {
+                return res.status(429).json({
+                    message: "AI_LIMIT_REACHED",
+                    error: "The AI is currently at its daily limit for generating PDFs."
+                });
+            }
+            res.status(500).json({ message: "Error in generating resume PDF", error: err.message });
+        }
 }
 
 /**

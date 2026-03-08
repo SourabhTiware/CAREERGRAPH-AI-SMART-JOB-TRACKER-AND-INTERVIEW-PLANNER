@@ -79,7 +79,14 @@ export const generateResumePdf = async ({ interviewReportId }) => {
 
     return response.data
     } catch (err) {
-        throw err
+        if (err.response && err.response.data instanceof Blob) {
+            const errorText = await err.response.data.text();
+            const errorJson = JSON.parse(errorText);
+            if (err.response.status === 429 || errorJson.message === "AI_LIMIT_REACHED") {
+                throw new Error("AI_LIMIT_REACHED");
+            }
+        }
+        throw err;
     }
 
 }

@@ -225,6 +225,10 @@ export async function generateResumePdf({ resume, selfDescription, jobDescriptio
 
     } catch (error) {
         console.error("Error in generateResumePdf:", error);
+        if (error.status === 429) {
+            console.error("Groq Rate Limit Hit during PDF generation.");
+            throw new Error("AI_LIMIT_REACHED"); // हाच मेसेज कंट्रोलरला हवा आहे
+        }
         throw new Error("Failed to generate Resume PDF: " + error.message);
     }
 }

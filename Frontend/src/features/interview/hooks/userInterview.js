@@ -75,9 +75,14 @@ export const useInterview = () => {
             document.body.appendChild(link)
             link.click()
         }
-        catch (error) {
-            console.log(error)
-        } finally {
+       catch (error) {
+        if (error.message === "AI_LIMIT_REACHED") {
+            alert("The AI is taking a rest! You hit the maximum number of requests for today. See you tomorrow for more career insights!");
+        } else {
+            console.error("PDF download failed:", error);
+            alert("Something went wrong while downloading. Please try again.");
+        }
+    } finally {
             setLoading(false)
         }
     }
