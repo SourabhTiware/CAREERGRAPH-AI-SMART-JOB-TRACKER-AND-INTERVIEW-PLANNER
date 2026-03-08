@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState} from "react";
 import { AuthContext} from "../auth.context.jsx"
 import {login, register, logout, getMe} from "../services/auth.api.js"
 
@@ -6,18 +6,31 @@ import {login, register, logout, getMe} from "../services/auth.api.js"
 export const useAuth = () =>{
     const context = useContext(AuthContext)
     const {user, setUser, loading, setLoading } = context
+    const [authError, setAuthError] = useState(null);
 
+    useEffect(() => {
+        if (authError) {
+            const timer = setTimeout(() => {
+                setAuthError(null); 
+            }, 5000);
+
+            return () => clearTimeout(timer); 
+        }
+    }, [authError]);
 
     const handleLogin = async ({email, password}) =>{
 
         setLoading(true);
+        setAuthError(null);
 
         try {
             const data = await login({ email, password});
             setUser(data.user);
             localStorage.setItem("user", JSON.stringify(data.user));
+            return {success: true};
         } catch (err) {
-            
+            setAuthError(err.message);
+            return {success: false}
         } finally{
             setLoading(false);
         }
@@ -28,6 +41,7 @@ export const useAuth = () =>{
     const handleRegister = async ({username, email, password}) =>{
 
         setLoading(true);
+        setAuthError(null);
 
         try {
             const data = await register({username, email, password});
@@ -35,10 +49,12 @@ export const useAuth = () =>{
             if (data.success && data.user) {
                 setUser(data.user);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                return {success: true};
             }
         }
          catch (error) {
-            
+            setAuthError(error.message);
+            return{success: false};
         }
          finally{
             setLoading(false)
@@ -93,5 +109,5 @@ export const useAuth = () =>{
     }, [setUser, setLoading])
 
 
-    return {user, loading, handleRegister, handleLogin, handleLogout}
+    return {user, loading,authError, handleRegister, handleLogin, handleLogout }
 }

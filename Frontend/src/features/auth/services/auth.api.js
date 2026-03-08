@@ -16,7 +16,7 @@ export const register = async({username, email, password}) => {
 
         return response.data;
     } catch(err){
-        console.log(err)
+        throw err.response?.data || { message: "Registration failed" };
     }
 }
 
@@ -29,7 +29,7 @@ export const login = async({email, password}) =>{
         return response.data;
 
     } catch (err) {
-        console.log(err)
+         throw err.response?.data || {message: "something went wrong"}
     }
 }
 
@@ -40,7 +40,7 @@ export const logout = async() =>{
     return response.data;
 
     } catch (err) {
-        console.log(err);
+        // console.log(err);
     }
 }
 
@@ -51,7 +51,7 @@ export const getMe = async () =>{
         return response.data;
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         if (err.response?.status !== 401) {
             console.error("Fetch User Error:", err);
         }

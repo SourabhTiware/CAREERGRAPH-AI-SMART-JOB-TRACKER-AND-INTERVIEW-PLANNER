@@ -7,7 +7,7 @@ import { MainHeading } from "./MainHeading.jsx";
 
 const Login = () => {
 
-    const { loading, handleLogin } = useAuth();
+    const { loading, handleLogin, authError } = useAuth();
 
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
@@ -17,8 +17,10 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        await handleLogin({email, password});
-        navigate("/");
+        const result = await handleLogin({email, password});
+        if(result && result.success){
+            navigate("/");
+        }
     }
 
     if(loading){
@@ -33,6 +35,10 @@ const Login = () => {
 
         <div className="form-container">
             <h1 >Login</h1>
+
+          
+                {authError && <div className="error-alert"> {authError}</div>}
+            
 
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
